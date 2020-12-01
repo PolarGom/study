@@ -16,4 +16,21 @@
 
 &nbsp;&nbsp;나의 가상머신은 1GB 이므로 최소 Heap 사이즈는 16MB 이고 최대 Heap 사이즈는 250MB 이다.
 
+#### JVM 모니터링 도구 VisualVM
+NetBeans 플랫폼을 기반으로 개발된 VisualVM은 JVM을 실시간으로 모니터링하는 GUI 도구이다. 그 외에도 Heap Dump, Thread Dump도 할 수 있으며 여러개의 VM을 동시에 모니터링 및 프로파일링 할 수 있다.
+
+##### 사용방법은
+
+1. [VisualVM 다운로드](https://visualvm.github.io/download.html) 에서 다운로드를 한다.
+2. 압축을 해제한 뒤 bin 폴더로 이동 한 뒤 visualvm.exe를 실행 한다.
+3. Applications 탭에서 모니터링하고자 하는 목록을 클릭하면 오른쪽(모니터링, 스레드, 샘플러, 프로피일 탭)에서 확인할 수 있다.
+![VisualVM](./images/visualvm.png)
+
+##### 각 탭에 대한 설명
+- Overview: 사용 옵션 및 자바 버전와 같은 시스템 정보 확인가능하다.
+- Monitor: CPU, Memory, Classes, Threads 등을 볼 수 있다.
+- Threads: 현재 Threads의 상태를 확인 가능하다.
+- Sampler: CPU, Memory를 샘플링 할 수 있다. 즉, JVM의 일정 주기로 스레드 덤프를 통해서 성능을 측정하고 성능 측정에 영향을 거의 주지 않는다. 하지만 일정 주기로 스레드 덤프가 호출 되기 때문에 호출 횟수를 잃어버리는 경우가 생겨 정확하지 않다.
+- Profiler: CPU, Memory 프로파일링을 할 수 있다. 즉, 어플리케이션 전체 혹은 몇몇 클래스의 성능을 측정 할 수 있고 알고리즘 최적화나 호출 횟수 측정하기에 용이하다.그리고 Profiler 에 의해 자동적으로 생성된 코드가 성능 측정에 어느정도 영향을 줄 수 있다.
+
 
