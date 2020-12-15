@@ -1,0 +1,13 @@
+#### 서비스 확인 방법
+- CentOS 6
+  - service [서비스이름] stop: 서비스 중지
+  - service [서비스이름] start: 서비스 시작
+  - service [서비스이름] restart: 서비스 재시작
+  - service [서비스이름] status: 서비스 상태 확인
+  - service [서비스이름] reload: 서비스의 설정파일을 리로드
+- CentOS 7
+  - systemctl stop [서비스이름]: 서비스 중지
+  - systemctl start [서비스이름]: 서비스 시작
+  - systemctl restart [서비스이름]: 서비스 재시작
+  - systemctl status [서비스이름]: 서비스 상태 확인
+  - systemctl reload [서비스이름]: 서비스의 설정파일을 리로드
