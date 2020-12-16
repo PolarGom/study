@@ -193,18 +193,14 @@ Alias /error/ "/var/www/error/"
 
 #### 아파치 Method 제한하기
 - httpd.conf 파일을 연다.
-- Directory 부분에 제한할 메소드를 정의한다.
+- Location 부분을 추가하여 제한할 메소드를 정의한다.
 - LimitExcept는 허용가능한 메소드이고 Limit는 허용하지 않는 메소드 이다.
 
 ```
-<Directory "/var/www/html">
-    <LimitExcept GET POST OPTION PUT>
-      Order allow,deny
-          Allow from all
-    </LimitExcept>
-    <Limit TRACE>
-        Order deny,allow
-        Deny from all
-    </Limit>
-</Directory>
+<Location />
+	<LimitExcept GET POST OPTION PUT>
+		Order allow,deny
+    		Allow from all
+	</LimitExcept>
+</Location>
 ```
