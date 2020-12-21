@@ -195,7 +195,7 @@ Alias /error/ "/var/www/error/"
 - httpd.conf 파일을 연다.
 - Location 부분을 추가하여 제한할 메소드를 정의한다.
 - LimitExcept는 허용가능한 메소드이고 Limit는 허용하지 않는 메소드 이다.
-- TraceEnable Off 도 추가한다.
+- TraceEnable Off 도 추가한다.(trace method는 Limit 가 아닌 TraceEnable로 Off 하면 된다.)
 
 ```
 <Location />
@@ -203,10 +203,10 @@ Alias /error/ "/var/www/error/"
 		Order allow,deny
     		Allow from all
 	</LimitExcept>
-    <Limit TRACE>
-        Order allow,deny
-            Allow from all
-    </Limit>
+#    <Limit TRACE>
+#        Order allow,deny
+#            Allow from all
+#    </Limit>
 </Location>
 
 TraceEnable off
