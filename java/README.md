@@ -195,7 +195,13 @@ NetBeans 플랫폼을 기반으로 개발된 VisualVM은 JVM을 실시간으로 
       - 더 많은 구현 기술이 필요하다.
 
 #### JPA
-- Fetch Type
+- OneToMany, ManyToOne 양방향 조인시 Outer Join 과 Inner Join
+  - Outer Join인 경우: ManyToOne 이 연관관계 주인에서 ManyToOne(optional = true) 혹은 @JoinColumn(name = "...", nullable = true)
+    이와 같이 설정할 경우 Many 에서 One 이 없을 수도 있다라는 설정이다.
+  - Inner Join인 경우: ManyToOne 이 연관관계 주인에서 ManyToOne(optional = false) 혹은 @JoinColumn(name = "...", nullable = false)
+    이와 같이 설정할 경우 Many 에서 One 이 무조건 있다라는 설정이다.
+  - 참고: optional 과 nullable 의 기본값은 true 이다.
+- Fetch Type 
   - 하나의 Entity를 조회 할 때, 연관관계에 있는 객체들을 어떻게 가져올 것이냐를 설정하는 값이다.
   - Lazy: 연관 관계의 Entity를 가져오지 않고, 실제 사용(getter) 할 때 가져온다.
     - 연관 관계 기본 Fetch Type: OneToMany, ManyToMany
@@ -235,4 +241,6 @@ spring:
       - fetch join 은 ManyToOne 와 OneToOne 은 여러번 사용 가능하다.
       - fetch join 사용시 Pageable을 파라미터로 넘겨 받아도 limit 와 offset 과 관려된 쿼리문은 없다.
         그러므로 모든 데이터를 메모리에 올린 후  페이징을 처리하기 때문에 메모리 이슈가 발생할 수 있다.
+        이를 해결하기 위해서는 @BatchSize 와 즉시 로딩을 이용하면 회피 할 수 있다.
+        적절하게 fetch join과 BatchSize를 이용해서 성능을 최적화 해야 한다.
     - JPA Repository 메소드에 @EntityGraph 어노테이션을 사용한다.
