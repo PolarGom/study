@@ -193,3 +193,46 @@ NetBeans 플랫폼을 기반으로 개발된 VisualVM은 JVM을 실시간으로 
     - 단점
       - 구현해야 할 코드가 많다.
       - 더 많은 구현 기술이 필요하다.
+
+#### JPA
+- Fetch Type
+  - 하나의 Entity를 조회 할 때, 연관관계에 있는 객체들을 어떻게 가져올 것이냐를 설정하는 값이다.
+  - Lazy: 연관 관계의 Entity를 가져오지 않고, 실제 사용(getter) 할 때 가져온다.
+    - 연관 관계 기본 Fetch Type: OneToMany, ManyToMany
+  - Eager: 연관 관계에 있는 Entity를 모두 가져온다.
+    - 연관 관계 기본 Fetch Type: ManyToOne, OneToOne
+- N + 1 이란? 
+  - OneToMany 및 ManyToOne 양방향 관계에서 OneToMany 에서 findAll 조회시 Many 부분에서 One 의 조회 갯수 만큼
+  Many의 부분을 가져오기 위해 여러번 쿼리가 날아가는 현상
+  - JPQL을 실행하면 JPA가 이를 분석하여 SQL을 생성한다. JPQL 입장에서는 즉시 로딩(Eager), 지연 로딩(Lazy) 같은
+  글로벌 패치 전략을 무시하고 JPQL 만 사용해서 SQL을 생성한다.
+  - JPQL 은 특징이 있다.
+    - findById 메소드: 엔티티를 영속성 컨텍스트에서 먼저 찾고 영속성 컨텍스트에 없는 경우 데이터베이스에서 찾는다.
+    - findAll 메소드: 항상 데이터베이스에 SQL 을 실행하여 결과를 조회한다. 
+      1. JPQL 을 호출하면 데이터베이스에 우선 적으로 조회한다.
+      2. 조회한 값을 영속성 컨텍스트에 저장한다.
+      3. 영속성 컨텍스트에 조회 할 때 이미 데이터가 존재한다면 데이터를 버린다.
+  - N + 1을 피하려면?
+    - OneToMany에서 Many 변수 부분에 BatchSize 어노테이션 추가 혹은 JPA 글로벌 설정으로 BatchSize 추가
+      BatchSize를 추가하면 Many 조회시 SQL 하나하나 실행하는것이 아니라 WHERE IN 절로 설정한 Size 만큼 가져온다.
+
+```
+- 클래스의 변수에 추가
+@BatchSize(size = 5)
+@OneToManay(mappedBy = "member")
+private List<String>> valueList = new LinkedList<>();
+
+- 스프링에서 글로벌 설정(yml 설정)
+spring:
+  jpa: 
+    properties:
+      default_batch_fetch_size: 1000
+```
+
+    - fetch join 을 사용하여 연관관계의 데이터도 함께 조회한다.
+      - fetch join 은 두개 이상의 테이블(Collection 자료형)에 사용 할 수 없고, Pageable을 사용 할 수 없다.
+      - fetch join 에서 두개 이상의 테이블(Collection 자료형)에서 사용하려면 자료형을 Set으로 변경하면된다.
+      - fetch join 은 ManyToOne 와 OneToOne 은 여러번 사용 가능하다.
+      - fetch join 사용시 Pageable을 파라미터로 넘겨 받아도 limit 와 offset 과 관려된 쿼리문은 없다.
+        그러므로 모든 데이터를 메모리에 올린 후  페이징을 처리하기 때문에 메모리 이슈가 발생할 수 있다.
+    - JPA Repository 메소드에 @EntityGraph 어노테이션을 사용한다.
