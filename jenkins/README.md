@@ -52,6 +52,8 @@
 ![ps 이미지](./images/node_4.png)
 
 5. 아래와 같이 파이프라인을 작성한다.
+(※ 참고, nodejs 부분의 'nodejs' 는 1번에서 Node 설정한 이름이다. 그리고 bat 'npm install... bat으로 시작하는데
+윈도우에서 실행하여 bat으로 설정한것이다. 리눅스 일 경우 sh 'npm install... sh 로 시작하면 된다.)
 
 ```
 pipeline {
