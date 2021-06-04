@@ -79,6 +79,25 @@ pipeline {
         ftpPublisher paramPublish: null, masterNodeName: '', alwaysPublishFromMaster: false, continueOnError: false, failOnError: false, publishers: [[configName: 'localhost', transfers: [[asciiMode: false, cleanRemote: false, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/test', remoteDirectorySDF: false, removePrefix: '/dist', sourceFiles: '/dist/**']], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false]]
       }
     }
+    stage('SSH transfer') {
+      steps([$class: 'BapSshPromotionPublisherPlugin']) {
+        sshPublisher(
+          continueOnError: false, failOnError: true,
+          publishers: [
+          sshPublisherDesc(
+            configName: 'TB 서버',// Jenkins 시스템 정보에 사전 입력한 서버 ID
+            verbose: true,
+            transfers: [
+              sshTransfer(
+                sourceFiles: '/dist/**', // 전송할 파일
+                removePrefix: '/dist', // 파일에서 삭제할 경로가 있다면 작성
+                remoteDirectory: '/data/httpd_www/', // 배포할 위치
+                execCommand: '' // 원격지에서 실행할 커맨드
+              )]
+          )]
+        )
+      }
+    }
   }
 ```
 
