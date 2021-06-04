@@ -57,23 +57,27 @@
 
 ```
 pipeline {
-   agent any
+  agent any
 
-   stages {
-      stage('Git Clone') {
-          steps {
-            git branch: '브런치명', credentialsId: 'Git 인증 키', url: 'Git 주소'  
-          }
+  stages {
+    stage('Git Clone') {
+      steps {
+            git branch: '브런치명', credentialsId: '인증키', url: 'Git 주소'  
       }
-      stage('Npm Build') {
-          steps {
-            nodejs('nodejs') {
-              bat 'npm install && npm run build'
-            }
-          }
+    }
+    stage('Npm Build') {
+      steps {
+        nodejs('nodejs') {
+          bat 'npm install && npm run build'
+        }
       }
-   }
-}
+    }
+    stage('FTP Upload') {
+      steps {
+        ftpPublisher paramPublish: null, masterNodeName: '', alwaysPublishFromMaster: false, continueOnError: false, failOnError: false, publishers: [[configName: 'localhost', transfers: [[asciiMode: false, cleanRemote: false, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/test', remoteDirectorySDF: false, removePrefix: '/dist', sourceFiles: '/dist/**']], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false]]
+      }
+    }
+  }
 ```
 
 ![ps 이미지](./images/node_5.png)
