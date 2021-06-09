@@ -36,8 +36,23 @@
     - (): 노드 단위
     - {}: 속성 추가
     - java:Lang: 변수:라벨로 노드 구분
+    - java:Lang :Object: 여러개의 라벨 지정
   - CREATE (sally)-[:Like]->(java)
     - []: 관계 설명
+
+- 관계 지정
+  - CREATE(n1)--(n2)
+  - CREATE(n1)-->(n2)
+  - CREATE(n1)<--(n2)
+  - CREATE(n1)-[:타입명]->(n2)
+  - CREATE(n1)-[변수명:타입명]->(n2)
+  - CREATE(n1)-[변수명:타입명{속성키: "속성값", 속성키: "속성값"}]->(n2)
+    - 방향의 관계를 지정 할 수 있다.
+    - 관계에서도 속성을 지정 할 수 있다.
+    - 타입명에는 대문자와 언더스코어(_)로 작성되며, 대소문자는 구별 된다. 하지만 하이픈(-)을 사요하면 안된다.
+  - CREATE(n:Person{name: "Sally"})-[:KNOWS{since:2021}]->(m:Persion)
+    - n은 변수명, Person은 노드 라벨, name은 속성 키, 값은 Sally
+    - 엣지 타입은 KNOWS를 가지고, 속성으로는 since 2021을가진다.
 
 - MATCH
   - MATCH (sally:Person) WHERE sally.name = "Sally" RETURN sally;
@@ -46,3 +61,62 @@
     - WHERE: 결과에 제약하는 구문. 기존 RDBMS와 동일
     - sally.name: name 속성과 sally 값을 비교
     - RETURN: 특정 결과를 요청할 때 사용
+
+- 예제
+
+```
+노드 생성
+CREATE (sally:Person{name: 'Sally', age: 20})
+CREATE (judy:Person{name: 'Judy', age: 25})
+CREATE (java:Lang{title : 'JAVA', authors: ['James Arthur Gosling']})
+CREATE (python:Lang{title : 'PYTHON', authors: ['Guido van Rossum']})
+CREATE (javascript:Lang{title : 'JAVASCRIPT', authors: ['Brendan Eich']})
+CREATE (rust:Lang{title : 'RUST', authors: ['호아레']})
+CREATE (go:Lang{title : 'GO', authors: ['로버트 그리즈머 롭 파이크 켄 톰프슨']})
+
+노드 관계 맺기
+MATCH
+  (a:Person),
+  (b:Lang)
+WHERE a.name = 'Sally' AND b.title = 'JAVA'
+CREATE (a)-[r:LIKE]->(b)
+RETURN type(r)
+
+MATCH
+  (a:Person),
+  (b:Lang)
+WHERE a.name = 'Sally' AND b.title = 'PYTHON'
+CREATE (a)-[r:LIKE]->(b)
+RETURN type(r)
+
+MATCH
+  (a:Person),
+  (b:Lang)
+WHERE a.name = 'Sally' AND b.title = 'JAVASCRIPT'
+CREATE (a)-[r:LIKE]->(b)
+RETURN type(r)
+
+MATCH
+  (a:Person),
+  (b:Lang)
+WHERE a.name = 'Judy' AND b.title = 'JAVASCRIPT'
+CREATE (a)-[r:LIKE]->(b)
+RETURN type(r)
+
+MATCH
+  (a:Person),
+  (b:Lang)
+WHERE a.name = 'Judy' AND b.title = 'PYTHON'
+CREATE (a)-[r:LIKE]->(b)
+RETURN type(r)
+
+MATCH
+  (a:Person),
+  (b:Lang)
+WHERE a.name = 'Judy' AND b.title = 'GO'
+CREATE (a)-[r:LIKE]->(b)
+RETURN type(r)
+```
+
+  - 결과
+![ps 이미지](./images/1.png)
