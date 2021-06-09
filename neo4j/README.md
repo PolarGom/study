@@ -27,3 +27,22 @@
 - 쿼리 결과 내보내기
 - 노드 및 관계를 포함하는 쿼리 결과를 그래프로 시각화
 - REST API를 편리하게 탐색
+
+#### Cypher 
+- 노드 생성
+  - CREATE (sally:Person{name: 'Sally', age: 16})
+  - CREATE (java:Lang{title: 'JAVA', authors: ['James Arthur Gosling']})
+    - CREATE: 데이터 생성 구문
+    - (): 노드 단위
+    - {}: 속성 추가
+    - java:Lang: 변수:라벨로 노드 구분
+  - CREATE (sally)-[:Like]->(java)
+    - []: 관계 설명
+
+- MATCH
+  - MATCH (sally:Person) WHERE sally.name = "Sally" RETURN sally;
+    - MATCH: 노드, 관계 패턴을 구체화 시켜주는 구문
+    - (sally:Person): sally 라는 변수에 매칭되는 Person 라벵르 가진 단순 노드 패턴
+    - WHERE: 결과에 제약하는 구문. 기존 RDBMS와 동일
+    - sally.name: name 속성과 sally 값을 비교
+    - RETURN: 특정 결과를 요청할 때 사용
