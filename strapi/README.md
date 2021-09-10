@@ -99,7 +99,7 @@ npm run develop
   - Response Body: 사용자에 대한 전반적인 정보 반환
   ![이미지](./images/user-login.png)
 
-  - 비고사항: 응답 받은 값에서 jwt 값을 API 통신시 Headers 의 Authorization 값에 Bearer 값에 넣어서 사용하면 된다.
+  - 기타: 응답 받은 값에서 jwt 값을 API 통신시 Headers 의 Authorization 값에 Bearer 값에 넣어서 사용하면 된다.
   
 - 회원 가입시 기본 Role 변경 방법
   1. General > Settings 메뉴로 이동한다.
@@ -123,4 +123,4 @@ npm run develop
   3. Roles 에서 해당하는 Role 을 선택한다.
   4. 하단 Permissions > UPLOAD 를 선택한다.
   5. upload 퍼미션을 주고 Save 를 한다.
-- 비고사항: 파일 업로드는 파일업로드만, 엔트리(Collection Type, Single Type)에 파일 업로드 후 파일명 업데이트, 엔트리 + 파일 동시 업로드가 가능하다.([참고](https://strapi.io/documentation/developer-docs/latest/development/plugins/upload.html#upload-files))
+- 기타: 파일 업로드는 파일업로드만, 엔트리(Collection Type, Single Type)에 파일 업로드 후 파일명 업데이트, 엔트리 + 파일 동시 업로드가 가능하다.([참고](https://strapi.io/documentation/developer-docs/latest/development/plugins/upload.html#upload-files))
