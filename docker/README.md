@@ -31,3 +31,6 @@
 |--link [컨테이너명]:[별칭]|컨테이너 연결||
 |--restart|docker desktop을 실행 시킬 때마다 컨테이너를 자동으로 재시작 실행 여부|no: 컨테이너를 재시작 시키지 않음(default), on-failure:[max-retries]: 컨테이너가 정상적으로 종료되지 않은 경우 재시작 시킴. max-retires와 함께 옵션을 주면 최대 시도 횟수 설정, always: 컨테이너를 항상 재시작 시킴, unless-stopped: 컨테이너를 Stop 시키기 전까지 항상 재시작 시킴.|
 |--log-opt max-size=100m --log-opt max-file=5|최대 100메가 크기의 5개의 로그 파일이 로그 로테이트 됨||
+
+### 참고
+- [도커 네트워크 요약](https://jonnung.dev/docker/2020/02/16/docker_network/)
