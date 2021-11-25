@@ -55,7 +55,7 @@ ENABLE_LETSENCRYPT=0
 JVB_PORT=10000
 ```
 
-7. 2번 압축 해제한 폴더로 이동 후 docker-compose 명령어를 실행한다.(명령어 하단 참조)
+7. docker-compose 명령어를 실행한다.(명령어 하단 참조)
 
 ```
 docker-compose up -d 
