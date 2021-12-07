@@ -99,5 +99,16 @@
 - 생성된 오버레이 네트워크는 스웜 서비스를 연결시켜 서비스간에 통신을 활성화 할 수 있다. 이러한 오버레이 네트워크는 Overlay Network Driver 를 사용한다.
 - 오버레이 네트워크를 사용하면 컨테이너는 외부에 포트를 오픈하지 않아도 되고 연결되는 다른 컨테이너와 다른 노드에 있어도 같은 서버에 있는것 처럼 통신할 수 있다.
 
+### Fluentd
+- 로그 수집기 이다. 
+- 다양한 데이터 소스(HTTP, TCP 등등..)로 부터 데이터를 받아 올 수 있다.
+- Fluentd로 전달된 데이터는 tag, time, record(JSON) 로 구성된 이벤트로 처리되며, 원하는 형태로 가공되어 다양한 목적지로 전달 될 수 있다.
+  - tag: 이벤트를 어디로 보낼지 결정하기 위한 구분값
+  - time: 이벤트가 발생한 시간
+  - record: 데이터(JSON)
+- 데이터 유실을 막기 위해 메모리와 파일 기반의 버퍼 시스템을 갖고 있으며, Failover를 위한 HA(High Availability) 구성도 가능하다.
+- Fluentd 는 Input, Parser, Engine, Filter, Buffer, Output, Formatter 7개의 컴포넌트로 구성되어 있다.
+- 일반적인 데이터 흐름은 Input -> Engine -> Output 이고 그 외(Parser, Buffer, Filter, Formatter 등)에는 설정에 따라서 선택적으로 추가 또는 삭제가 가능하다.
+
 ### 참고
 - [도커 네트워크 요약](https://jonnung.dev/docker/2020/02/16/docker_network/)
