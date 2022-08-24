@@ -38,5 +38,29 @@
     ```
     query> SET GLOBAL general_log = 'off';
     ```
+- 실행계획
+  - 성능 진단의 가장 첫걸음은 실행한 SQL 이 DB에서 어떻게처 처리 되는지 파악하는 것이다.
+  - 실행계획이란 DB가 데이터를 찾아가는 일련의 과정을 사람이 알아보기 쉽게 DB 결과 셋으로 보여주는 것이다.
+  - 이를 활용하여 기존의 쿼리를 튜닝 할 수 있고 성능 분석, 인덱스 전략 수집 등과 같이 최적화를 진행 할 수 있다.
+  - 사용 방법
 
+  ```
+  -- 실행할 쿼리 앞에 EXPLAIN EXTENDED 를 붙여서 사용한다.
+  query> EXPLAIN EXTENDED SELECT * FROM CLASS_ROOM AS c LEFT JOIN STUDENT AS s	ON c.`key` = s.class_key;
 
+  -- 위의 쿼리를 실행 후 아래 쿼리를 실행하면 쿼리 옵티마이저에 의해 최적화 된 쿼리를 확인 할 수 있다.
+  query> SHOW WARNINGS;
+  ```
+
+  - EXPLAIN EXTENDED 결과에서 각 항목의 의미
+    - id: SELECT 아이디로 SELECT를 구분하는 번호
+    - table: 참조하는 테이블
+    - select_type: SELECT에 대한 타입
+    - type: 조인 혹은 조회 타입
+    - possible_keys: 데이터를 조회할 때 DB에서 사용할 수 있는 인덱스 리스트
+    - key: 실제로 사용 할 인덱스
+    - key_len: 실제로 사용 할 인덱스의 길이
+    - ref: KEY 안의 인덱스와 비교하는 컬럼(상수)
+    - rows: 쿼리 실행 시 조사하는 행 수립
+    - extra: 추가 정보
+  - [EXPLAIN EXTENDED 의 자세한 목록 참조 사이트](https://dev.mysql.com/doc/refman/8.0/en/explain-output.html)
