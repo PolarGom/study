@@ -64,3 +64,15 @@
     - rows: 쿼리 실행 시 조사하는 행 수립
     - extra: 추가 정보
   - [EXPLAIN EXTENDED 의 자세한 목록 참조 사이트](https://dev.mysql.com/doc/refman/8.0/en/explain-output.html)
+
+- 테이블 정보조회
+  - 아래의 쿼리를 실행하면 테이블에 대한 Field, Type, Null, Key, Default, Extra 를 확인 할 수 있다.
+
+  ```
+  query> DESC `Table이름`;
+  ```
+---
+- 쿼리가 느려지는 문제 해결 하는 세가지 방버
+  - 쿼리 자체 튜닝
+  - 테이블의 튜닝
+  - 서버 튜닝
